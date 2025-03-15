@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 
 
 export async function updateSnippet(id: number, data: any) {
-    const { title, code } = data;
     console.log(id);
 
     await db.snippet.update({
@@ -16,4 +15,11 @@ export async function updateSnippet(id: number, data: any) {
         }
     })
     redirect(`/snippet/${id}`)
+}
+
+export async function deleteSnipprt(id: number){
+    await db.snippet.delete({
+        where: {id}
+    })
+    redirect('/')
 }

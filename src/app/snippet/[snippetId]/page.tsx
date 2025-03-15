@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import Link from "next/link";
+import * as actions from "@/actions";
 
 interface SnippetProps {
     params: {
@@ -16,6 +17,8 @@ export default async function Snippet({ params }: SnippetProps) {
         return <div>Snippet not found</div>;
     }
 
+    const handleDeleteAction = actions.deleteSnipprt.bind(null, snippet.id);
+
     return (
         <div className="flex flex-col">
             <div className="flex justify-between items-center my-4">
@@ -25,7 +28,9 @@ export default async function Snippet({ params }: SnippetProps) {
                         href={`/snippet/${params.snippetId}/edit`}
                         className="text-blue-700 hover:underline"
                     >Edit</Link>
-                    <button className="text-red-800">delete</button>
+                    <form action={handleDeleteAction}>
+                        <button className="text-red-800">delete</button>
+                    </form>
                 </div>
             </div>
             <h1 className="bg-slate-200 p-4 rounded-lg">{snippet.code}</h1>
