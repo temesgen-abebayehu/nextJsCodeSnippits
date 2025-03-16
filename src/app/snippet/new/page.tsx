@@ -30,7 +30,7 @@ export default function CreateSnippet(){
                         className="border rounded-lg w-full p-2 bg-slate-100"
                     />
                 </div>
-                <p className="text-red-700">{formState.message}</p>
+                {formState.message && <p className="text-red-500 text-xl border-red-400 p-2">{formState.message}</p>}
                 <button 
                     type="submit"
                     className="bg-blue-700 text-white text-xl rounded-lg p-2 cursor-pointer"
