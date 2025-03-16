@@ -1,30 +1,16 @@
-import {db} from "@/db"
-import {redirect} from "next/navigation";
+'use client'
+
+import { useFormState } from "react-dom";
+import * as actions from '@/actions';
+
 
 export default function CreateSnippet(){
-    async function createSnippet(formData: FormData){
-        "use server";
-
-        const title = formData.get("title") as string;
-        const code = formData.get("code") as string;
-
-        if(!title || !code){
-            return console.error("Please fill in all fields");
-        }
-
-        const snippet = await db.snippet.create({
-            data: {
-                title,
-                code,
-            },
-        }); 
-        
-        console.log(snippet);
-        redirect('/');
-    }
+    const [formState, action] = useFormState(actions.createSnippet,{
+        message: '',
+    })
 
     return (
-        <form action={createSnippet}>
+        <form action={action}>
             <nav className="container flex flex-col gap-4">
                 <h1 className="text-2xl font-bold text-slate-800 p-4">Create Snippet</h1>
                 <div className="flex gap-4 text-xl font-semibold">
@@ -44,6 +30,7 @@ export default function CreateSnippet(){
                         className="border rounded-lg w-full p-2 bg-slate-100"
                     />
                 </div>
+                <p className="text-red-700">{formState.message}</p>
                 <button 
                     type="submit"
                     className="bg-blue-700 text-white text-xl rounded-lg p-2 cursor-pointer"
